@@ -1,3 +1,7 @@
+# Parameterize Location to the test resources deployment script. This allows
+# specifying a different Azure region to use when manually triggering the live
+# tests pipeline. This is useful for when we want to test in different
+# environments: Prod, Canary, etc.
 parameters:
 - name: location
   displayName: Location
