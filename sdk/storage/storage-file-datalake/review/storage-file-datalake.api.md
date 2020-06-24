@@ -37,6 +37,28 @@ import { UserAgentOptions } from '@azure/core-http';
 import { UserDelegationKeyModel } from '@azure/storage-blob';
 import { WebResource } from '@azure/core-http';
 
+// @public
+export interface AccessControlChangeCounters {
+    changedDirectoriesCount: number;
+    changedFilesCount: number;
+    failedChangesCount: number;
+}
+
+// @public
+export interface AccessControlChangeFailure {
+    errorMessage: string;
+    isDirectory: boolean;
+    name: string;
+}
+
+// @public
+export interface AccessControlChanges {
+    aggregateCounters: AccessControlChangeCounters;
+    batchCounters: AccessControlChangeCounters;
+    batchFailures: AccessControlChangeFailure[];
+    continuation?: string;
+}
+
 // @public (undocumented)
 export type AccessControlType = "user" | "group" | "mask" | "other";
 
@@ -215,12 +237,15 @@ export class DataLakePathClient extends StorageClient {
     move(destinationPath: string, options?: PathMoveOptions): Promise<PathMoveResponse>;
     move(destinationFileSystem: string, destinationPath: string, options?: PathMoveOptions): Promise<PathMoveResponse>;
     get name(): string;
+    removeAccessControlRecursive(acl: RemovePathAccessControlItem[], options?: PathChangeAccessControlRecursiveOptions): Promise<PathChangeAccessControlRecursiveResponse>;
     setAccessControl(acl: PathAccessControlItem[], options?: PathSetAccessControlOptions): Promise<PathSetAccessControlResponse>;
+    setAccessControlRecursive(acl: PathAccessControlItem[], options?: PathChangeAccessControlRecursiveOptions): Promise<PathChangeAccessControlRecursiveResponse>;
     setHttpHeaders(httpHeaders: PathHttpHeaders, options?: PathSetHttpHeadersOptions): Promise<PathSetHttpHeadersResponse>;
     setMetadata(metadata?: Metadata, options?: PathSetMetadataOptions): Promise<PathSetMetadataResponse>;
     setPermissions(permissions: PathPermissions, options?: PathSetPermissionsOptions): Promise<PathSetAccessControlResponse>;
     toDirectoryClient(): DataLakeDirectoryClient;
     toFileClient(): DataLakeFileClient;
+    updateAccessControlRecursive(acl: PathAccessControlItem[], options?: PathChangeAccessControlRecursiveOptions): Promise<PathChangeAccessControlRecursiveResponse>;
 }
 
 // @public (undocumented)
@@ -849,13 +874,7 @@ export interface PathAccessControl {
 }
 
 // @public (undocumented)
-export interface PathAccessControlItem {
-    // (undocumented)
-    accessControlType: AccessControlType;
-    // (undocumented)
-    defaultScope: boolean;
-    // (undocumented)
-    entityId: string;
+export interface PathAccessControlItem extends RemovePathAccessControlItem {
     // (undocumented)
     permissions: RolePermissions;
 }
@@ -866,6 +885,21 @@ export interface PathAppendDataHeaders {
     date?: Date;
     requestId?: string;
     version?: string;
+}
+
+// @public
+export interface PathChangeAccessControlRecursiveOptions extends CommonOptions {
+    abortSignal?: AbortSignalLike;
+    batchSize?: number;
+    continuation?: string;
+    maxBatches?: number;
+    onProgress?: (progress: AccessControlChanges) => void;
+}
+
+// @public
+export interface PathChangeAccessControlRecursiveResponse {
+    continuation?: string;
+    counters: AccessControlChangeCounters;
 }
 
 // @public
@@ -1284,6 +1318,16 @@ export interface PathSetAccessControlOptions extends CommonOptions {
 }
 
 // @public
+export enum PathSetAccessControlRecursiveMode {
+    // (undocumented)
+    Modify = "modify",
+    // (undocumented)
+    Remove = "remove",
+    // (undocumented)
+    Set = "set"
+}
+
+// @public
 type PathSetAccessControlResponse = PathSetAccessControlHeaders & {
     _response: coreHttp.HttpResponse & {
         parsedHeaders: PathSetAccessControlHeaders;
@@ -1418,6 +1462,16 @@ export interface RawAccessPolicy {
     permissions: string;
     // (undocumented)
     startsOn?: string;
+}
+
+// @public (undocumented)
+export interface RemovePathAccessControlItem {
+    // (undocumented)
+    accessControlType: AccessControlType;
+    // (undocumented)
+    defaultScope: boolean;
+    // (undocumented)
+    entityId: string;
 }
 
 export { RequestPolicy }
