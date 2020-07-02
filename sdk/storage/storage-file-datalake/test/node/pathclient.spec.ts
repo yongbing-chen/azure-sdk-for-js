@@ -27,7 +27,7 @@ describe("DataLakePathClient Node.js only", () => {
 
   let recorder: any;
 
-  beforeEach(async function() {
+  beforeEach(async function () {
     recorder = record(this, recorderEnvSetup);
     serviceClient = getDataLakeServiceClient();
     fileSystemName = recorder.getUniqueName("filesystem");
@@ -40,7 +40,7 @@ describe("DataLakePathClient Node.js only", () => {
     await fileClient.flush(content.length);
   });
 
-  afterEach(async function() {
+  afterEach(async function () {
     await fileSystemClient.delete();
     recorder.stop();
   });
@@ -54,8 +54,8 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: true,
           write: true,
-          execute: true
-        }
+          execute: true,
+        },
       },
       {
         accessControlType: "group",
@@ -64,8 +64,8 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: true,
           write: false,
-          execute: true
-        }
+          execute: true,
+        },
       },
       {
         accessControlType: "other",
@@ -74,9 +74,9 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: false,
           write: true,
-          execute: false
-        }
-      }
+          execute: false,
+        },
+      },
     ];
     await fileClient.setAccessControl(acl);
 
@@ -90,18 +90,18 @@ describe("DataLakePathClient Node.js only", () => {
       owner: {
         read: true,
         write: true,
-        execute: true
+        execute: true,
       },
       group: {
         read: true,
         write: false,
-        execute: true
+        execute: true,
       },
       other: {
         read: false,
         write: true,
-        execute: false
-      }
+        execute: false,
+      },
     });
     assert.deepStrictEqual(permissions.acl, acl);
   });
@@ -115,8 +115,8 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: true,
           write: true,
-          execute: true
-        }
+          execute: true,
+        },
       },
       {
         accessControlType: "group",
@@ -125,8 +125,8 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: true,
           write: false,
-          execute: true
-        }
+          execute: true,
+        },
       },
       {
         accessControlType: "other",
@@ -135,13 +135,13 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: false,
           write: true,
-          execute: false
-        }
-      }
+          execute: false,
+        },
+      },
     ];
     await fileClient.setAccessControl(acl, {
       owner: "$superuser",
-      group: "$superuser"
+      group: "$superuser",
     });
 
     const permissions = await fileClient.getAccessControl();
@@ -154,18 +154,18 @@ describe("DataLakePathClient Node.js only", () => {
       owner: {
         read: true,
         write: true,
-        execute: true
+        execute: true,
       },
       group: {
         read: true,
         write: false,
-        execute: true
+        execute: true,
       },
       other: {
         read: false,
         write: true,
-        execute: false
-      }
+        execute: false,
+      },
     });
     assert.deepStrictEqual(permissions.acl, acl);
   });
@@ -179,8 +179,8 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: true,
           write: true,
-          execute: false
-        }
+          execute: false,
+        },
       },
       {
         accessControlType: "group",
@@ -189,8 +189,8 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: true,
           write: false,
-          execute: true
-        }
+          execute: true,
+        },
       },
       {
         accessControlType: "other",
@@ -199,9 +199,9 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: false,
           write: true,
-          execute: true
-        }
-      }
+          execute: true,
+        },
+      },
     ];
 
     const permissions: PathPermissions = {
@@ -210,18 +210,18 @@ describe("DataLakePathClient Node.js only", () => {
       owner: {
         read: true,
         write: true,
-        execute: false
+        execute: false,
       },
       group: {
         read: true,
         write: false,
-        execute: true
+        execute: true,
       },
       other: {
         read: false,
         write: true,
-        execute: false
-      }
+        execute: false,
+      },
     };
 
     await fileClient.setPermissions(permissions);
@@ -232,7 +232,7 @@ describe("DataLakePathClient Node.js only", () => {
     assert.deepStrictEqual(response.group, "$superuser");
     assert.deepStrictEqual(response.permissions, {
       ...permissions,
-      other: { ...permissions.other, execute: true }
+      other: { ...permissions.other, execute: true },
     });
     assert.deepStrictEqual(response.acl, acl);
   });
@@ -246,8 +246,8 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: true,
           write: true,
-          execute: false
-        }
+          execute: false,
+        },
       },
       {
         accessControlType: "group",
@@ -256,8 +256,8 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: true,
           write: false,
-          execute: true
-        }
+          execute: true,
+        },
       },
       {
         accessControlType: "other",
@@ -266,9 +266,9 @@ describe("DataLakePathClient Node.js only", () => {
         permissions: {
           read: false,
           write: true,
-          execute: true
-        }
-      }
+          execute: true,
+        },
+      },
     ];
 
     const permissions: PathPermissions = {
@@ -277,18 +277,18 @@ describe("DataLakePathClient Node.js only", () => {
       owner: {
         read: true,
         write: true,
-        execute: false
+        execute: false,
       },
       group: {
         read: true,
         write: false,
-        execute: true
+        execute: true,
       },
       other: {
         read: false,
         write: true,
-        execute: false
-      }
+        execute: false,
+      },
     };
 
     await fileClient.setPermissions(permissions, { owner: "$superuser", group: "$superuser" });
@@ -299,7 +299,7 @@ describe("DataLakePathClient Node.js only", () => {
     assert.deepStrictEqual(response.group, "$superuser");
     assert.deepStrictEqual(response.permissions, {
       ...permissions,
-      other: { ...permissions.other, execute: true }
+      other: { ...permissions.other, execute: true },
     });
     assert.deepStrictEqual(response.acl, acl);
   });
@@ -335,7 +335,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
 
   let recorder: any;
 
-  beforeEach(async function() {
+  beforeEach(async function () {
     recorder = record(this, recorderEnvSetup);
     serviceClient = getDataLakeServiceClient();
     fileSystemName = recorder.getUniqueName("filesystem");
@@ -348,7 +348,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
     await fileClient.flush(content.length);
   });
 
-  afterEach(async function() {
+  afterEach(async function () {
     await fileSystemClient.delete();
     recorder.stop();
   });
@@ -388,7 +388,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
     assert.deepStrictEqual(3, result.counters.changedDirectoriesCount);
     assert.deepStrictEqual(4, result.counters.changedFilesCount);
     assert.deepStrictEqual(0, result.counters.failedChangesCount);
-    assert.deepStrictEqual(undefined, result.continuation);
+    assert.deepStrictEqual(undefined, result.continuationToken);
   });
 
   it("setAccessControlRecursive should work with options - maxBatches", async () => {
@@ -427,12 +427,12 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
         maxBatches: 1,
         onProgress: () => {
           batchCounter++;
-        }
+        },
       }
     );
 
     assert.deepStrictEqual(1, batchCounter);
-    assert.notDeepStrictEqual(undefined, result.continuation);
+    assert.notDeepStrictEqual(undefined, result.continuationToken);
   });
 
   it("setAccessControlRecursive should work with options - batchSize", async () => {
@@ -465,7 +465,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
     const cumulativeCounters: AccessControlChangeCounters = {
       changedDirectoriesCount: 0,
       changedFilesCount: 0,
-      failedChangesCount: 0
+      failedChangesCount: 0,
     };
     const result = await directoryClient.setAccessControlRecursive(
       toAcl(
@@ -499,7 +499,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
           );
 
           batchCounter++;
-        }
+        },
       }
     );
 
@@ -509,7 +509,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
     assert.deepStrictEqual(3, result.counters.changedDirectoriesCount);
     assert.deepStrictEqual(4, result.counters.changedFilesCount);
     assert.deepStrictEqual(0, result.counters.failedChangesCount);
-    assert.deepStrictEqual(undefined, result.continuation);
+    assert.deepStrictEqual(undefined, result.continuationToken);
     assert.deepStrictEqual(true, batchCounter > 3);
   });
 
@@ -551,10 +551,10 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
           batchSize: 2,
           onProgress: (progress) => {
             midProgress = progress;
-            continuation = progress.continuation;
+            continuation = progress.continuationToken;
             aborter.abort();
           },
-          abortSignal: aborter.signal
+          abortSignal: aborter.signal,
         }
       );
     } catch (err) {
@@ -567,7 +567,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
         "user::rwx,user:ec3595d6-2c17-4696-8caa-7e139758d24a:rw-,group::rw-,mask::rwx,other::---"
       ),
       {
-        continuation
+        continuationToken: continuation,
       }
     );
 
@@ -583,7 +583,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
       0,
       result.counters.failedChangesCount + midProgress!.batchCounters.failedChangesCount
     );
-    assert.deepStrictEqual(undefined, result.continuation);
+    assert.deepStrictEqual(undefined, result.continuationToken);
   });
 
   it("updateAccessControlRecursive should work", async () => {
@@ -621,7 +621,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
     assert.deepStrictEqual(3, result.counters.changedDirectoriesCount);
     assert.deepStrictEqual(4, result.counters.changedFilesCount);
     assert.deepStrictEqual(0, result.counters.failedChangesCount);
-    assert.deepStrictEqual(undefined, result.continuation);
+    assert.deepStrictEqual(undefined, result.continuationToken);
   });
 
   it("removeAccessControlRecursive should work", async () => {
@@ -659,7 +659,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
     assert.deepStrictEqual(3, result.counters.changedDirectoriesCount);
     assert.deepStrictEqual(4, result.counters.changedFilesCount);
     assert.deepStrictEqual(0, result.counters.failedChangesCount);
-    assert.deepStrictEqual(undefined, result.continuation);
+    assert.deepStrictEqual(undefined, result.continuationToken);
 
     const removeResult = await directoryClient.removeAccessControlRecursive(
       toRemoveAcl(
@@ -673,7 +673,7 @@ describe("DataLakePathClient setAccessControlRecursive Node.js only", () => {
     assert.deepStrictEqual(3, removeResult.counters.changedDirectoriesCount);
     assert.deepStrictEqual(4, removeResult.counters.changedFilesCount);
     assert.deepStrictEqual(0, removeResult.counters.failedChangesCount);
-    assert.deepStrictEqual(undefined, removeResult.continuation);
+    assert.deepStrictEqual(undefined, removeResult.continuationToken);
   });
 
   it("setAccessControlRecursive should work with progress failures - TODO", async () => {});
