@@ -42,8 +42,7 @@ export {
   PathFlushDataResponse as FileFlushResponse,
   PathFlushDataResponse as FileUploadResponse,
   PathGetPropertiesAction,
-  PathRenameMode,
-  PathSetAccessControlRecursiveMode
+  PathRenameMode
 } from "./generated/src/models";
 
 export { PathCreateResponse };

@@ -53,7 +53,6 @@ import {
   PathRenameMode,
   PathResourceType,
   PathSetAccessControlOptions,
-  PathSetAccessControlRecursiveMode,
   PathSetAccessControlResponse,
   PathSetHttpHeadersOptions,
   PathSetHttpHeadersResponse,
@@ -63,6 +62,7 @@ import {
   PathSetPermissionsResponse,
   RemovePathAccessControlItem,
 } from "./models";
+import { PathSetAccessControlRecursiveMode } from "./models.internal";
 import { newPipeline, Pipeline, StoragePipelineOptions } from "./Pipeline";
 import { StorageClient } from "./StorageClient";
 import {
