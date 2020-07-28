@@ -894,6 +894,7 @@ export interface PathChangeAccessControlRecursiveOptions extends CommonOptions {
     abortSignal?: AbortSignalLike;
     batchSize?: number;
     continuationToken?: string;
+    continueOnFailure?: boolean;
     maxBatches?: number;
     onProgress?: (progress: AccessControlChanges) => void;
 }

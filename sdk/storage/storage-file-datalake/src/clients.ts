@@ -162,6 +162,7 @@ export class DataLakePathClient extends StorageClient {
           acl: toAclString(acl as PathAccessControlItem[]),
           maxRecords: options.batchSize,
           continuation: continuationToken,
+          forceFlag: options.continueOnFailure,
           spanOptions
         });
         batchCounter++;
